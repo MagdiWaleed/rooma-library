@@ -9,4 +9,14 @@ class Accounts extends Model
 {
     /** @use HasFactory<\Database\Factories\AccountsFactory> */
     use HasFactory;
+    protected $fillable = [
+        'Username',
+        'name',
+        'email',
+        'password',
+        'phone',
+        'address',
+        'whatsappNumber',
+        'profilePicture'
+    ];
 }
