@@ -27,4 +27,18 @@ Route::get('/{locale?}', function ($requestedLocale = null) use ($supportedLocal
 })
 ->where('locale', '[a-z]{2}') // This regex constrains the 'locale' parameter to be two lowercase letters if present
 ->name('home.page');
+Route::get('/accounts{locale?}', function ($requestedLocale = null) use ($supportedLocales, $defaultLocale) {
+
+    $localeToSet = $defaultLocale;
+
+    if ($requestedLocale && in_array($requestedLocale, $supportedLocales)) {
+        $localeToSet = $requestedLocale;
+    }
+
+    App::setLocale($localeToSet);
+
+    return view('FormPage');
+})
+->where('locale', '[a-z]{2}') // This regex constrains the 'locale' parameter to be two lowercase letters if present
+->name('accounts.page');
 Route::resource('accounts', AccountsController::class)->only(['index', 'store']);

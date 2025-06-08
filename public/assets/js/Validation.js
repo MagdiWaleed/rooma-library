@@ -42,7 +42,7 @@ function validateForm() {
     
     if (isCheck === "" || whatsappNumber==="") {
         error_whatsapp_number.innerHTML = "Enter the Whatsapp Number and Check it";
-        isValid = false;
+        //isValid = false;
     }
     else if (isCheck==="0")
     {
@@ -62,7 +62,7 @@ function validateForm() {
     // if (isValid) {
     //     document.getElementById("RegisterForm").submit();
     // }
-    isValid = true;
+   
     return isValid
 }
 
