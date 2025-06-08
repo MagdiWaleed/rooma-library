@@ -62,6 +62,7 @@ function validateForm() {
     // if (isValid) {
     //     document.getElementById("RegisterForm").submit();
     // }
+    isValid = true;
     return isValid
 }
 
@@ -84,37 +85,88 @@ function validateConfirmPassword(password,confirmPassword) {
         return false;
 }
  
- function register() {
-     if (!validateForm())return;
+function register(event) {
+   
+    if (!validateForm()) return;
     
-        var form = document.getElementById("RegisterForm");
-        var formData = new FormData(form); 
-      
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "../../logic/DB_Ops.php", true); 
-      
-        xhr.onload = function () {
-            console.log(xhr)
-          if (xhr.status === 200) {
-            try {
-              var response = JSON.parse(xhr.responseText); 
-              console.log("Response:", response);
-              alert("Message: " + response['message']);
-            } catch (e) {
-              console.error("Invalid JSON:", xhr.responseText);
+    var form = document.getElementById("RegisterForm");
+    var formData = new FormData(form);
+    
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', form.action, true);
+    
+    // REQUIRED: Set headers to identify as AJAX request
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    xhr.setRequestHeader('Accept', 'application/json');
+    
+    xhr.onload = function() {
+        console.log("Status:", xhr.status);
+        console.log("Response:", xhr.responseText);
+        
+        try {
+            var response = JSON.parse(xhr.responseText);
+            
+            if (xhr.status >= 200 && xhr.status < 300) {
+                // Success case
+                if (response.redirect) {
+                    window.location.href = response.redirect;
+                    alert(response.message || "Registration successful!");
+                } 
+            } else {
+                // Error case
+                if (response.errors) {
+                    
+                    console.log("Validation errors:", response.errors);
+                    alert("Please fix the errors below.");
+                    displayServerErrors(response.errors);
+                } else {
+                    alert(response.message || "An error occurred");
+                }
             }
-          } else {
-            console.error("Server returned error:", xhr.status);
-          }
-        };
-      
-        xhr.onerror = function () {
-          console.error("Network request failed");
-        };
-      
-        xhr.send(formData); 
+        } catch (e) {
+            console.error("Failed to parse JSON:", e);
+            alert("Unexpected response from server");
+        }
+    };
     
-  }
+    xhr.onerror = function() {
+        alert("Network error occurred");
+    };
+    
+    xhr.send(formData);
+}
+
+
+
+function displayServerErrors(errors) {
+    console.log("Processing errors:", errors); // Debug log
+    
+    // Clear all previous errors
+    document.querySelectorAll('[id^="error-"]').forEach(el => {
+        el.textContent = '';
+        el.style.display = 'none';
+    });
+    
+    // Highlight fields with errors
+    for (const field in errors) {
+        const errorElement = document.getElementById(`error-${field}`);
+        const inputField = document.querySelector(`[name="${field}"]`);
+        
+        console.log(`Processing ${field}:`, { errorElement, inputField }); 
+        
+        if (errorElement) {
+            
+            errorElement.textContent = errors[field][0];
+            errorElement.style.color = '#dc3545';
+            errorElement.style.display = 'block';
+        }
+        
+        if (inputField) {
+            inputField.classList.add('is-invalid'); 
+            inputField.focus();
+        }
+    }
+}
   
 
   function whatsappNumber() {
