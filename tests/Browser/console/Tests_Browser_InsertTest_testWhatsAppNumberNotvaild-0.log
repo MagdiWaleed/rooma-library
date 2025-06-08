@@ -1,0 +1,8 @@
+[
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/whatsapp-number-validators.p.rapidapi.com\/v1\/validate\/wa_id - Failed to load resource: the server responded with a status of 429 ()",
+        "source": "network",
+        "timestamp": 1749390493026
+    }
+]
