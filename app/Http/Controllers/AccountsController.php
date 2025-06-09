@@ -47,8 +47,12 @@ class AccountsController extends Controller
            $file = $request->file('photo');
             Log::info('uploadImage function called');
         $filename = uniqid() . '.' . $file->getClientOriginalExtension();
-        $path = $file->storeAs('public/Uploads', $filename);
-        $account->profilePicture = $filename; // Store the path in the database
+        if($file->move('Uploads',$filename)){
+            Log::info('File uploaded successfully: ' . $filename);
+        } else {
+            Log::error('Failed to move uploaded file');
+        }
+        $account->profilePicture = $filename;
         } 
        
         $account->save();

@@ -16,6 +16,7 @@ function validateForm() {
     if (!validateEmail(email)) {
         errorEmail.innerHTML = "Invalid Email";
         isValid = false;
+        console.log("Invalid Email");
     } 
     else
     {
@@ -25,6 +26,7 @@ function validateForm() {
     if (!validatePassword(password)) {
         errorPassword.innerHTML = "Invalid Password";
         isValid = false;
+        console.log("Invalid Password");
     } 
     else
     {
@@ -34,6 +36,7 @@ function validateForm() {
     if (!validatePhone(phone)) {
         errorPhone.innerHTML = "Invalid Phone Number";
         isValid = false;
+        console.log("Invalid Phone Number");
     } 
     else
     {
@@ -42,17 +45,20 @@ function validateForm() {
     
     if (isCheck === "" || whatsappNumber==="") {
         error_whatsapp_number.innerHTML = "Enter the Whatsapp Number and Check it";
-        //isValid = false;
+        isValid = false;
+        console.log("Whatsapp Number is not checked");
     }
     else if (isCheck==="0")
     {
         isValid = false;
+        console.log("Whatsapp Number is not valid");
     }
 
 
     if (!validateConfirmPassword(password,confirmPassword)) {
         error_confirm_password.innerHTML = "Confirm password does not match the password";
         isValid = false;
+        console.log("Confirm password does not match the password");
     }
     else
     {
@@ -87,7 +93,9 @@ function validateConfirmPassword(password,confirmPassword) {
  
 function register(event) {
    
-    if (!validateForm()) return;
+    if (!validateForm()){
+        console.log("Form validation failed.");
+        return;} 
     
     var form = document.getElementById("RegisterForm");
     var formData = new FormData(form);

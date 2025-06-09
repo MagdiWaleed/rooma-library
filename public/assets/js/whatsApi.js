@@ -19,20 +19,21 @@ function validateWhatsNumber() {
         xhr.addEventListener('readystatechange', function () {
             if (this.readyState === this.DONE) {
             const response = JSON.parse(this.responseText);
-            
+            console.log(response);
             if (response.status && response.valid) {
                 error_whatsapp_number.innerHTML = "Verified ✅";
                 error_whatsapp_number.style.color = "green";
                 isCheck.innerHTML = "1";
             } else {
                 error_whatsapp_number.innerHTML = "Not Valid ❌";
-                isCheck.innerHTML = "0";
+                isCheck.innerHTML = "0";//0
+                console.log("Whatsapp Number is not valid from API");
             }
         }
         });
 
         xhr.open('POST', 'https://whatsapp-number-validators.p.rapidapi.com/v1/validate/wa_id');
-        xhr.setRequestHeader('x-rapidapi-key', '23683586ccmshb8509b5703c2d82p1f6319jsn6df98991f829');
+        xhr.setRequestHeader('x-rapidapi-key', '9e03b009dcmsh2361b20e7438681p1885b4jsn6150b4c48389');
         xhr.setRequestHeader('x-rapidapi-host', 'whatsapp-number-validators.p.rapidapi.com');
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.setRequestHeader('Accept', 'application/json');

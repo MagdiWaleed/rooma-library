@@ -3,6 +3,6 @@
         "level": "SEVERE",
         "message": "http:\/\/localhost:8000\/accounts - Failed to load resource: the server responded with a status of 422 (Unprocessable Content)",
         "source": "network",
-        "timestamp": 1749390489508
+        "timestamp": 1749471039135
     }
 ]
